@@ -2,6 +2,8 @@ package com.NetWork.qq1.qqClient.view;
 
 import javax.swing.*;
 
+//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
 /**
  * Created by thinkpad on 2018/3/29.
  */
