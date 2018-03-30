@@ -1,4 +1,4 @@
-package com.NetWork.qq1.qqClient.common;
+package com.NetWork.qq1.common;
 
 import java.io.Serializable;
 

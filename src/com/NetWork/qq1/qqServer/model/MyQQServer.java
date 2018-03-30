@@ -1,8 +1,9 @@
 package com.NetWork.qq1.qqServer.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.NetWork.qq1.common.Message;
+import com.NetWork.qq1.common.User;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,15 +16,33 @@ public class MyQQServer {
     public MyQQServer() {
         try {
             //在9999监听
+            System.out.println("我是服务器，在9999监听");
             ServerSocket ss = new ServerSocket(9999);
             //阻塞，等待连接
-            Socket s = ss.accept();
+            while (true) {
+                Socket s = ss.accept();
 
-            //接受客户端发来的消息
-            InputStreamReader isr = new InputStreamReader(s.getInputStream());
-            BufferedReader br = new BufferedReader(isr);
+                //接受客户端发来的消息
+                ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+                User u = (User) ois.readObject();
 
-            String info = br.readLine();
+                Message m=new Message();
+                ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+
+                if (u.getPasswd().equals("123456")) {
+                    //返回一个成功登录的信息报
+                    m.setMessageType("1");
+                    oos.writeObject(m);
+                } else {
+                    m.setMessageType("2");
+                    oos.writeObject(m);
+                    //关闭连接
+                    s.close();
+                }
+            }
+
+
+
 
 
         } catch (Exception e) {

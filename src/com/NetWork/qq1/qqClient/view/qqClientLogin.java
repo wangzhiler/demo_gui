@@ -1,13 +1,18 @@
 package com.NetWork.qq1.qqClient.view;
 
+import com.NetWork.qq1.common.User;
+import com.NetWork.qq1.qqClient.model.*;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by thinkpad on 2018/3/25.
  * qq客户端登录界面
  */
-public class qqClientLogin extends JFrame{
+public class qqClientLogin extends JFrame implements ActionListener{
 
     //定义北部需要的组件
     JLabel jlb1;
@@ -71,6 +76,9 @@ public class qqClientLogin extends JFrame{
         //处理南部
         jp1 = new JPanel();
         jp1_jb1 = new JButton(new ImageIcon("images/qq/denglu.gif"));
+        //响应用户点击登录
+        jp1_jb1.addActionListener(this);
+
         jp1_jb2 = new JButton(new ImageIcon("images/qq/quxiao.gif"));
         jp1_jb3 = new JButton(new ImageIcon("images/qq/xiangdao.gif"));
         jp1.add(jp1_jb1);
@@ -85,5 +93,22 @@ public class qqClientLogin extends JFrame{
         this.setSize(350, 240);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == jp1_jb1) {
+            qqClientUser qqClientUser = new qqClientUser();
+            User u=new User();
+            u.setUserId(jp2_jtf.getText().trim());
+            u.setPasswd(new String(jp2_jpf.getPassword()));
+            if (qqClientUser.checkUser(u)) {
+                new qqFriendList();
+                //关闭登录界面
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this,"用户名密码错误");
+            }
+        }
     }
 }
