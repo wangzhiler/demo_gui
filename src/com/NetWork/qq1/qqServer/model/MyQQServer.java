@@ -33,6 +33,13 @@ public class MyQQServer {
                     //返回一个成功登录的信息报
                     m.setMessageType("1");
                     oos.writeObject(m);
+
+                    //这里就单开一个线程，该线程与该客户保持通讯
+                    ServerConClientThread scct = new ServerConClientThread(s);
+                    ManageClientThread.addClientThread(u.getUserId(),scct);
+                    //启动与该客户端通信的线程
+                    scct.start();
+
                 } else {
                     m.setMessageType("2");
                     oos.writeObject(m);

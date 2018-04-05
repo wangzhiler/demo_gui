@@ -103,7 +103,7 @@ public class qqClientLogin extends JFrame implements ActionListener{
             u.setUserId(jp2_jtf.getText().trim());
             u.setPasswd(new String(jp2_jpf.getPassword()));
             if (qqClientUser.checkUser(u)) {
-                new qqFriendList();
+                new qqFriendList(u.getUserId());
                 //关闭登录界面
                 this.dispose();
             } else {

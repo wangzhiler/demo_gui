@@ -22,15 +22,18 @@ public class qqFriendList extends JFrame implements ActionListener, MouseListene
     JPanel jpmsr1,jpmsr2,jpmsr3;
     JButton jpmsr_jb1,jpmsr_jb2,jpmsr_jb3;
     JScrollPane jsp2;
+    String owner;
 
     //把整个JFrame设置成CardLayout
     CardLayout cl;
 
     public static void main(String[] args) {
-        qqFriendList qqFriendList = new qqFriendList();
+//        qqFriendList qqFriendList = new qqFriendList();
     }
 
-    public qqFriendList() {
+    public qqFriendList(String ownerId) {
+        this.owner=ownerId;
+
         //处理第一张卡片
         CardFriend();
 
@@ -42,6 +45,8 @@ public class qqFriendList extends JFrame implements ActionListener, MouseListene
         this.setLayout(cl);
         this.add(jphy1, "1");
         this.add(jpmsr1, "2");
+        //在窗口显示自己的编号
+        this.setTitle(ownerId);
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(300, 500);
@@ -128,7 +133,9 @@ public class qqFriendList extends JFrame implements ActionListener, MouseListene
             //得到该好友的编号
             String friendNo=((JLabel)e.getSource()).getText();
 //            System.out.println("你希望和 " + friendNo + " 聊天");
-            new qqChat(friendNo);
+            qqChat qqChat = new qqChat(owner, friendNo);
+            Thread t = new Thread(qqChat);
+            t.start();
         }
     }
 

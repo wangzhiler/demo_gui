@@ -12,12 +12,14 @@ import com.NetWork.qq1.common.*;
  */
 public class qqClientConServer {
 
+    public static Socket s;
+
     //发送第一次请求
     public boolean sendLoginInfoToServer(Object o) {
         boolean b=false;
         try {
-            Socket s = new Socket("127.0.0.1", 9999);
-
+            System.out.println("发送第一次请求");
+            s = new Socket("127.0.0.1", 9999);
             ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
             oos.writeObject(o);
             //会返回一个结果

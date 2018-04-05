@@ -7,6 +7,7 @@ import com.NetWork.qq1.common.*;
 public class qqClientUser {
 
     public boolean checkUser(User u) {
+        //
         return new qqClientConServer().sendLoginInfoToServer(u);
     }
 }
