@@ -4,6 +4,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by thinkpad on 2018/4/6.
+ *
+ * 对业务写方法加锁，对业务读方法不加锁
+ * 容易产生脏读问题 dirtyRead
+ *
+ * 解决脏读问题经常使用方式是CopyOnWrite  解释赋值
  */
 public class T007_Account {
 
