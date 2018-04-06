@@ -4,6 +4,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import com.NetWork.qq1.common.*;
+import com.NetWork.qq1.qqClient.tools.ClientConServerThread;
+import com.NetWork.qq1.qqClient.tools.ManageClientConServerThread;
 
 
 /**
@@ -12,7 +14,7 @@ import com.NetWork.qq1.common.*;
  */
 public class qqClientConServer {
 
-    public static Socket s;
+    public Socket s;
 
     //发送第一次请求
     public boolean sendLoginInfoToServer(Object o) {
@@ -25,10 +27,17 @@ public class qqClientConServer {
             //会返回一个结果
             ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
             Message ms=(Message)ois.readObject();
+
+            //这里就是验证用户登录的地方
             if (ms.getMessageType().equals("1")) {
-                b= true;
+                //就创建一个该qq号和服务器端保持通讯连接的线程
+                ClientConServerThread ccst = new ClientConServerThread(s);
+                //启动该通讯线程
+                ManageClientConServerThread.addClientConServerThread(((User)o).getUserId(),ccst);
+
+                b = true;
             } else {
-                b= false;
+                b = false;
             }
 
         } catch (Exception e) {

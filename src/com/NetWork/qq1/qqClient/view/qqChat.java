@@ -2,6 +2,7 @@ package com.NetWork.qq1.qqClient.view;
 
 import com.NetWork.qq1.common.Message;
 import com.NetWork.qq1.qqClient.model.qqClientConServer;
+import com.NetWork.qq1.qqClient.tools.ManageClientConServerThread;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ import java.util.Date;
  * 因为客户端，要处于读取的状态，依次我们把它们做成一个线程
  *
  */
-public class qqChat extends JFrame implements ActionListener,Runnable{
+public class qqChat extends JFrame implements ActionListener{
 
     JTextArea jta;
     JTextField jtf;
@@ -54,6 +55,14 @@ public class qqChat extends JFrame implements ActionListener,Runnable{
         this.setVisible(true);
     }
 
+    //写一个方法，让它显示消息
+    public void showMessage(Message m)
+    {
+        String info = m.getSender() + " 对 " + m.getGetter() + " 说：" + m.getCon() + "\r\n";
+        System.out.println("m = [" + m.getCon() + "]");
+        this.jta.append(info);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jb) {
@@ -65,7 +74,8 @@ public class qqChat extends JFrame implements ActionListener,Runnable{
             m.setSenTime(new Date().toString());
             //发送给服务器
             try {
-                ObjectOutputStream oos = new ObjectOutputStream(qqClientConServer.s.getOutputStream());
+                ObjectOutputStream oos = new ObjectOutputStream(
+                        ManageClientConServerThread.getClientConServerThread(ownerId).getS().getOutputStream());
                 oos.writeObject(m);
             } catch (Exception e1) {
                 e1.printStackTrace();
@@ -73,24 +83,7 @@ public class qqChat extends JFrame implements ActionListener,Runnable{
         }
     }
 
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                //读取 读不到就等待
-                ObjectInputStream ois = new ObjectInputStream(qqClientConServer.s.getInputStream());
 
-                Message m = (Message) ois.readObject();
-
-                //显示
-                String info = m.getSender() + " 对 " + m.getGetter() + " 说：" + m.getCon() + "\r\n";
-                this.jta.append(info);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
 
 

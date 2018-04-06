@@ -1,5 +1,7 @@
 package com.NetWork.qq1.qqClient.view;
 
+import com.NetWork.qq1.qqClient.tools.ManageQQChat;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -133,9 +135,11 @@ public class qqFriendList extends JFrame implements ActionListener, MouseListene
             //得到该好友的编号
             String friendNo=((JLabel)e.getSource()).getText();
 //            System.out.println("你希望和 " + friendNo + " 聊天");
-            qqChat qqChat = new qqChat(owner, friendNo);
-            Thread t = new Thread(qqChat);
-            t.start();
+            qqChat qqChat = new qqChat(this.owner, friendNo);
+
+            //把聊天界面加入管理类
+            ManageQQChat.addQQChat(this.owner+" "+friendNo,qqChat);
+
         }
     }
 
