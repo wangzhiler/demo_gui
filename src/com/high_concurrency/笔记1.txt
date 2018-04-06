@@ -9,3 +9,4 @@ ReentrantLock总结
 2. 比synchronized灵活
     1)用trylock尝试锁定，根据不同的结果决定执行什么样的逻辑。
        trylock还可以指定时间
+
