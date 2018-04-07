@@ -71,4 +71,10 @@ Executor
 ExecutorService
     一个服务，服务跑在后台不停运行，等着执行任务。
     除了execute方法外，还有一个submit。
+    callable约等于runnable  callable有返回值，runnable无
+    execute执行runnable，不需要返回值
     submit可以往里面扔runnable，callable
+Executors
+    上面这几个的 常用的工具类
+ThreadPool
+Future
